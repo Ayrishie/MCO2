@@ -45,20 +45,19 @@ public class RegularVendingMachine {
         scanner = new Scanner(System.in);
 
         setDenominationValues();
-        setItemSlots();
-        setItemPrices();
-        setItemPrices();
+        setItemCalorieAndCapacity();
+        setItemSlot();
         initializeDenominationQuantities();
         setDenominationNames();
-        displayItemCalories();  // Call the method to set calorie counts
-        displayItemPrices();   // Call the method to set item prices
-        displayDenominationQuantities();
+        setItemCalories();  // Call the method to set calorie counts
+        setItemPrices();   // Call the method to set item prices
+        setDenominationQuantities();
     }
 
     /**
      * Sets the item slots in the vending machine.
      */
-    private void setItemSlots() {
+    private void setItemCalorieAndCapacity() {
         itemSlots.add("Bread");
         itemSlots.add("Pizza Sauce");
         itemSlots.add("Cheese");
@@ -71,6 +70,7 @@ public class RegularVendingMachine {
         for (int i = 0; i < SLOT_COUNT; i++) {
             itemQuantities.add(ITEM_CAPACITY); // Set initial quantity to 10
             itemCalories.add(0); // Add a default calorie value of 0 for each item
+
         }
     }
 
@@ -107,12 +107,14 @@ public class RegularVendingMachine {
     }
 
     /**
-     * Sets the prices of the items in the vending machine.
+     * Sets the slots of the items in the vending machine.
      */
-    private void setItemPrices() {
+    private void setItemSlot() {
         for (int i = 0; i < SLOT_COUNT; i++) {
             itemPrices.add(DEFAULT_PRICE);
+            System.out.println(itemPrices + "System.out.println(itemPrices);");
         }
+
     }
 
     /**
@@ -127,16 +129,13 @@ public class RegularVendingMachine {
     /**
      * Displays the item calories and allows the user to set the calorie count for each item.
      */
-    public void displayItemCalories() {
+    public void setItemCalories() {
         System.out.println();
         System.out.println("\t####################################");
         System.out.println("\t------------------------------------");
         System.out.println("\t \u001B[33m|===============================|\u001B[0m");
         System.out.println("\t \u001B[33m|       Set Item Calories       |\u001B[0m");
         System.out.println("\t \u001B[33m|===============================|\u001B[0m");
-
-
-
         System.out.println();
         System.out.println("Enter the calories for the available items:");
         for (int i = 0; i < SLOT_COUNT; i++) {
@@ -154,16 +153,13 @@ public class RegularVendingMachine {
     /**
      * Displays the item prices and allows the user to set the price for each item.
      */
-    public void displayItemPrices() {
+    public void setItemPrices() {
         System.out.println();
         System.out.println("\t####################################");
         System.out.println("\t------------------------------------");
         System.out.println("\t \u001B[33m|===============================|\u001B[0m");
         System.out.println("\t \u001B[33m|       Set Item Prices         |\u001B[0m");
         System.out.println("\t \u001B[33m|===============================|\u001B[0m");
-
-
-
         System.out.println();
         System.out.println("Enter the prices for available items:");
 
@@ -171,7 +167,7 @@ public class RegularVendingMachine {
             String itemName = itemSlots.get(i);
             System.out.print("\t\t    " + (i + 1) + ". (" + itemName + "): ");
             double price = scanner.nextDouble();
-            itemPrices.set(i, price);
+            itemPrices.set(i, price); // setting of item prices
         }
         System.out.println("\t----------------------------------");
         System.out.println("\t####################################");
@@ -182,7 +178,7 @@ public class RegularVendingMachine {
     /**
      * Displays the denomination quantities and allows the user to set the quantities for each denomination.
      */
-    public void displayDenominationQuantities() {
+    public void setDenominationQuantities() {
         System.out.println();
         System.out.println("\t====================================");
         System.out.println("\t------------------------------------");
@@ -203,7 +199,6 @@ public class RegularVendingMachine {
         System.out.println();
         System.out.println("<.............................................>");
     }
-
 
     /**
      * Displays the items in the vending machine.
