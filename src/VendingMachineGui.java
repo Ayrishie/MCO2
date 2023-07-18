@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 public class VendingMachineGui extends JFrame {
+    private Menu menu;
     public VendingMachineGui(){
         super("Vending Machine Factory");
         setLayout(new BorderLayout());
@@ -11,6 +12,7 @@ public class VendingMachineGui extends JFrame {
         init();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        menu = new Menu();
     }
 
     private void init(){
@@ -63,16 +65,8 @@ public class VendingMachineGui extends JFrame {
 
         this.add(panelCenter, BorderLayout.CENTER);
 
-        // Add action listeners to the buttons
-        buttonCreate.addActionListener(e -> {
-            Menu menu = new Menu();
-            menu.createVendingMachine();
-        });
-
-        buttonTest.addActionListener(e -> {
-            Menu menu = new Menu();
-            menu.testVendingMachineSubMenu();
-        });
+        buttonCreate.addActionListener(e -> menu.createVendingMachine());
+        buttonTest.addActionListener(e -> menu.testVendingMachineSubMenu());
     }
 }
 
