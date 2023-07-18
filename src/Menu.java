@@ -40,47 +40,6 @@ public class Menu {
         System.out.print("\t\t=> ");
     }
 
-    /**
-     * Constructs a Menu object with default values.
-     * Initializes the scanner, vending machine, and maintenance objects.
-     */
-    private void showTitleScreen() {
-        System.out.println();
-        System.out.println(String.format("%60s", "\u001B[38;5;196m========== Test Vending Machine =========="));
-        System.out.println(String.format("%52s", "\u001B[38;5;202mRRRR    AAAA  IIIIII   OOOOO"));
-        System.out.println(String.format("%52s", "\u001B[38;5;208mR   R  A    A   II     O   O"));
-        System.out.println(String.format("%52s", "\u001B[38;5;214mRRRR   AAAAAA   II     O   O"));
-        System.out.println(String.format("%52s", "\u001B[38;5;220mR  R   A    A   II     O   O"));
-        System.out.println(String.format("%52s", "\u001B[38;5;226mR   R  A    A  IIIII   OOOOO"));
-        System.out.print(String.format("%60s", "\u001B[38;5;190m============================================="));
-
-        System.out.println("\t\t\nWelcome to RAIO Vending Machine Factory and Store!");
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Displays the main menu and handles user input.
-     * Allows the user to create a vending machine, test its features, or exit the program.
-     */
-    private void showColoredMenu() {
-        System.out.println();
-        System.out.println();
-        System.out.println("\u001B[32m====== Vending Machine Menu ======");
-        System.out.println("\u001B[32m=================================");
-        System.out.println("\u001B[33m1. Create a Vending Machine");
-        System.out.println("\u001B[33m2. Test a Vending Machine");
-        System.out.println("\u001B[33m3. Exit");
-        System.out.println("\u001B[32m=================================");
-
-        System.out.print("\t\t=> ");
-
-    }
-
 
     /**
      * The function creates a vending machine and prompts the user to choose between a regular or
@@ -177,37 +136,6 @@ public class Menu {
                     break;
             }
         } while (option != 6);
-    }
-
-    /**
-     * The function "displayMenu" displays a menu with options to create a vending machine, test the
-     * vending machine, or exit the program, and continues to display the menu until the user chooses
-     * to exit.
-     */
-    public void displayMenu() {
-        showTitleScreen(); // display once
-        int choice;
-        do {
-            clearScreen();
-            showColoredMenu();
-            choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
-
-            switch (choice) {
-                case 1:
-                    createVendingMachine();
-                    break;
-                case 2:
-                    testVendingMachineSubMenu();
-                    break;
-                case 3:
-                    System.out.println("Exiting...");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    break;
-            }
-        } while (choice != 3);
     }
 
     /**

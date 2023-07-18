@@ -1,7 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 public class VendingMachineGui extends JFrame {
     private Menu menu;
+    private JButton buttonCreate;
+    private JButton buttonTest;
+    private JButton buttonExit;
     public VendingMachineGui(){
         super("Vending Machine Factory");
         setLayout(new BorderLayout());
@@ -21,7 +25,7 @@ public class VendingMachineGui extends JFrame {
         panelSouth.setLayout(new FlowLayout());
         panelSouth.setBackground(Color.decode("#F79327"));
 
-        JButton buttonExit = new JButton("Exit");
+        buttonExit = new JButton("Exit");
         panelSouth.add(buttonExit);
 
         this.add(panelSouth, BorderLayout.SOUTH);
@@ -45,7 +49,7 @@ public class VendingMachineGui extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        JButton buttonCreate = new JButton("Create Vending Machine");
+        buttonCreate = new JButton("Create Vending Machine");
         buttonCreate.setForeground(Color.black); // Set foreground (text) color to black
         buttonCreate.setBackground(Color.decode("#A8A196")); // Set background color to a light gray
         gbc.gridx = 0;
@@ -54,7 +58,7 @@ public class VendingMachineGui extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panelCenter.add(buttonCreate, gbc);
 
-        JButton buttonTest = new JButton("Test Vending Machine");
+        buttonTest = new JButton("Test Vending Machine");
         buttonTest.setForeground(Color.black); // Set foreground (text) color to black
         buttonTest.setBackground(Color.decode("#A8A196")); // Set background color to a light gray
         gbc.gridy = 1;
@@ -64,10 +68,20 @@ public class VendingMachineGui extends JFrame {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
 
         this.add(panelCenter, BorderLayout.CENTER);
-
-        buttonCreate.addActionListener(e -> menu.createVendingMachine());
-        buttonTest.addActionListener(e -> menu.testVendingMachineSubMenu());
     }
+
+    public void addButtonCreateListener(ActionListener listener) {
+        buttonCreate.addActionListener(listener);
+    }
+
+    public void addButtonTestListener(ActionListener listener) {
+        buttonTest.addActionListener(listener);
+    }
+
+    public void addButtonExitListener(ActionListener listener) {
+        buttonExit.addActionListener(listener);
+    }
+
 }
 
 
