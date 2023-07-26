@@ -1,4 +1,5 @@
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -9,7 +10,7 @@ public class Menu {
     private Scanner scanner;
     private RegularVendingMachine vendingMachine;
     private Maintenance maintenance;
-
+    private int specialVMChecker;
 
     /**
      * Constructs a new Menu object.
@@ -19,6 +20,7 @@ public class Menu {
         scanner = new Scanner(System.in);
         vendingMachine = null;
         maintenance = new Maintenance(); // Create an instance of Maintenance
+        specialVMChecker = 0;
     }
 
     /**
@@ -97,7 +99,7 @@ public class Menu {
         String machineType = scanner.next();
         scanner.nextLine(); // Consume the newline character
 
-        while (!machineType.equalsIgnoreCase("R")) {
+        while (!machineType.equalsIgnoreCase("R") && !machineType.equalsIgnoreCase("S")) {
             System.out.println("\u001B[36m===============================");
             System.out.println("|    \u001B[34mR for Regular          \u001B[36m|");
             System.out.println("|    \u001B[34mS for Special          \u001B[36m|");
@@ -109,22 +111,41 @@ public class Menu {
             scanner.nextLine(); // Consume the newline character
         }
 
+        if (machineType.equalsIgnoreCase("R")) {
+            vendingMachine = new RegularVendingMachine();
+            System.out.println();
+            System.out.println();
+            String createVMText =
+                    "\u001B[35m\t  ============================\n" +
+                            "\t  |                          |\n" +
+                            "\t  |  Regular Vending Machine |\n" +
+                            "\t  |       created.           |\n" +
+                            "\t  |                          |\n" +
+                            "\t  ============================\u001B[0m";
 
-        vendingMachine = new RegularVendingMachine();
-        System.out.println();
-        System.out.println();
-        String createVMText =
-                "\u001B[35m\t  ============================\n" +
-                        "\t  |                          |\n" +
-                        "\t  |  Regular Vending Machine |\n" +
-                        "\t  |       created.           |\n" +
-                        "\t  |                          |\n" +
-                        "\t  ============================\u001B[0m";
+            System.out.println(createVMText);
+            System.out.println();
+            System.out.println();
+            specialVMChecker = -1;
 
-        System.out.println(createVMText);
-        System.out.println();
-        System.out.println();
+        } else {
+            vendingMachine = new SpecialVendingMachine();
+            System.out.println();
+            System.out.println();
+            String createVMText =
+                    "\u001B[35m\t  ============================\n" +
+                            "\t  |                          |\n" +
+                            "\t  |  Special Vending Machine |\n" +
+                            "\t  |       created.           |\n" +
+                            "\t  |                          |\n" +
+                            "\t  ============================\u001B[0m";
 
+            System.out.println(createVMText);
+            System.out.println();
+            System.out.println();
+
+            specialVMChecker = 1;
+        }
     }
 
     /**
@@ -132,8 +153,6 @@ public class Menu {
      * various maintenance tasks on a vending machine.
      */
     private void performMaintenance() {
-
-
 
         int option;
         do {
@@ -179,36 +198,10 @@ public class Menu {
         } while (option != 6);
     }
 
-    /**
-     * The function "displayMenu" displays a menu with options to create a vending machine, test the
-     * vending machine, or exit the program, and continues to display the menu until the user chooses
-     * to exit.
-     */
-    public void displayMenu() {
-        showTitleScreen(); // display once
-        int choice;
-        do {
-            clearScreen();
-            showColoredMenu();
-            choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
 
-            switch (choice) {
-                case 1:
-                    createVendingMachine();
-                    break;
-                case 2:
-                    testVendingMachineSubMenu();
-                    break;
-                case 3:
-                    System.out.println("Exiting...");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    break;
-            }
-        } while (choice != 3);
-    }
+    //remove na ata to since
+
+
 
     /**
      * The function "testVendingMachineSubMenu" displays a menu for testing vending machine features and
@@ -259,37 +252,159 @@ public class Menu {
      * The function allows the user to test vending machine features by selecting an item and making a
      * payment.
      */
+
+    //edit this code so that it will be an if else statement for reg and special
     private void testVendingFeatures() {
         vendingMachine.displayItems();
 
-        System.out.print("Enter the item number you want to purchase (1-" + vendingMachine.getSlotCount() + "): ");
-        int itemNumber = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+        if (specialVMChecker == -1) {
+            // Regular Vending Machine
+            System.out.print("Enter the item number you want to purchase (1-" + vendingMachine.getSlotCount() + "): ");
+            int itemNumber = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
 
-        if ((itemNumber < 1) || (itemNumber > 8)){
-            System.out.println("Item slot doesn't exist");
-            return;
-        }
+            if ((itemNumber < 1) || (itemNumber > vendingMachine.getSlotCount())) {
+                System.out.println("Item slot doesn't exist");
+                return;
+            }
 
-        vendingMachine.displayUpdatedDenominationQuantities();
-        System.out.print("Enter the payment denomination (1-9): ");
-        int paymentDenomination = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+            vendingMachine.displayUpdatedDenominationQuantities();
+            System.out.print("Enter the payment denomination (1-9): ");
+            int paymentDenomination = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
 
-        if ((paymentDenomination < 1) || (paymentDenomination > 9)){
-            System.out.println("Denomination doesn't exist");
-            return;
-        }
+            if ((paymentDenomination < 1) || (paymentDenomination > 9)) {
+                System.out.println("Denomination doesn't exist");
+                return;
+            }
 
-        if (vendingMachine.processTransaction(itemNumber - 1, paymentDenomination)) {
-            System.out.println();
-            System.out.println("Transaction completed successfully.");
-            System.out.println();
-        } else {
-            System.out.println();
-            System.out.println("Transaction failed.");
-            System.out.println();
+            if (vendingMachine.processTransaction(itemNumber - 1, paymentDenomination)) {
+                System.out.println("Transaction completed successfully.");
+            } else {
+                System.out.println("Transaction failed.");
+            }
+        } else if (specialVMChecker == 1) {
+            // Special Vending Machine
+            List<Integer> chosenItems = new ArrayList<>();
+            List<Double> chosenItemPrices = new ArrayList<>();
+            List<Integer> chosenItemCalories = new ArrayList<>();
+
+            boolean continueSelecting = true;
+            while (continueSelecting) {
+                System.out.println("Available Items:");
+                vendingMachine.displayItems();
+
+                System.out.print("Enter the item number you want to purchase (1-" + vendingMachine.getSlotCount() + "): ");
+                int itemNumber = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
+
+                if ((itemNumber < 1) || (itemNumber > vendingMachine.getSlotCount())) {
+                    System.out.println("Item slot doesn't exist");
+                    continue; // Ask for the item number again
+                }
+
+                System.out.print("Enter the quantity you want to purchase for item " + itemNumber + ": ");
+                int quantity = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
+
+                if (quantity <= 0) {
+                    System.out.println("Invalid quantity. Please enter a positive value.");
+                    continue; // Ask for the quantity again
+                }
+
+                double itemPrice = vendingMachine.getItemPrices().get(itemNumber - 1);
+                int itemCalories = vendingMachine.getItemCalories().get(itemNumber - 1);
+
+                double totalPrice = itemPrice * quantity;
+                int totalCalories = itemCalories * quantity;
+
+                System.out.println("Total Price for " + quantity + " items: " + totalPrice);
+                System.out.println("Total Calories for " + quantity + " items: " + totalCalories);
+
+                // Add the selected item and its details to the lists
+                chosenItems.add(itemNumber);
+                chosenItemPrices.add(totalPrice);
+                chosenItemCalories.add(totalCalories);
+
+                System.out.print("Do you want to purchase another item? (Y/N): ");
+                String choice = scanner.nextLine().trim().toUpperCase();
+                if (!choice.equals("Y")) {
+                    continueSelecting = false;
+                }
+            }
+
+            // Calculate the total price of all selected items
+            double totalCost = 0;
+            for (double price : chosenItemPrices) {
+                totalCost += price;
+            }
+
+            // Display the selected items and their respective prices and calories
+            System.out.println("Selected Items and Their Details:");
+            for (int i = 0; i < chosenItems.size(); i++) {
+                int itemNumber = chosenItems.get(i);
+                String item = vendingMachine.getItemSlots().get(itemNumber - 1);
+                double itemPrice = chosenItemPrices.get(i);
+                int itemCalories = chosenItemCalories.get(i);
+                System.out.println(item + " - Price: " + itemPrice + " - Calories: " + itemCalories);
+            }
+
+            // Display the total price
+            System.out.println("Total Price of the Selected Items: " + totalCost);
+
+            // Process transactions for each selected item
+            for (int i = 0; i < chosenItems.size(); i++) {
+                int itemNumber = chosenItems.get(i);
+                System.out.print("Enter the payment denomination for item " + itemNumber + " (1-9): ");
+                int paymentDenomination = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
+
+                if ((paymentDenomination < 1) || (paymentDenomination > 9)) {
+                    System.out.println("Denomination doesn't exist");
+                    return;
+                }
+
+                if (vendingMachine.processTransaction(itemNumber - 1, paymentDenomination)) {
+                    System.out.println("Transaction for item " + itemNumber + " completed successfully.");
+                } else {
+                    System.out.println("Transaction for item " + itemNumber + " failed.");
+                }
+            }
         }
     }
 
+
+
+    //mga tatangalin
+    /**
+     * The function "displayMenu" displays a menu with options to create a vending machine, test the
+     * vending machine, or exit the program, and continues to display the menu until the user chooses
+     * to exit.
+     */
+    public void displayMenu() {
+        showTitleScreen(); // display once
+        int choice;
+        do {
+            clearScreen();
+            showColoredMenu();
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    createVendingMachine();
+                    break;
+                case 2:
+                    testVendingMachineSubMenu();
+                    break;
+                case 3:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (choice != 3);
+    }
 }
+

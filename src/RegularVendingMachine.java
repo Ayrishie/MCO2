@@ -12,11 +12,11 @@ public class RegularVendingMachine {
     private static final int DENOMINATION_COUNT = 9;
     private static final double DEFAULT_PRICE = 0.0;
     private List<Integer> denominationValues;
-    private List<String> itemSlots;
-    private List<Integer> itemQuantities;
-    private List<Double> itemPrices;
+    private final List<String> itemSlots;
+    private final List<Integer> itemQuantities;
+    private final List<Double> itemPrices;
     private List<Integer> denominationQuantities;
-    private List<Integer> itemCalories;  // New list to hold calorie counts
+    private final List<Integer> itemCalories;  // New list to hold calorie counts
     private double totalSales;
     private int transactionCount;
     private List<Integer> initialItemQuantities;
@@ -46,7 +46,7 @@ public class RegularVendingMachine {
 
         setDenominationValues();
         setItemCalorieAndCapacity();
-        setItemSlot();
+        setItemSlots();
         initializeDenominationQuantities();
         setDenominationNames();
         setItemCalories();  // Call the method to set calorie counts
@@ -109,13 +109,24 @@ public class RegularVendingMachine {
     /**
      * Sets the slots of the items in the vending machine.
      */
-    private void setItemSlot() {
+    protected void setItemSlots() {
         for (int i = 0; i < SLOT_COUNT; i++) {
             itemPrices.add(DEFAULT_PRICE);
-            System.out.println(itemPrices + "System.out.println(itemPrices);");
         }
 
     }
+
+    /**
+     * Gets the list of item slots in the vending machine.
+     *
+     * @return The list of item slots.
+     */
+    public List<String> getItemSlots() {
+        return itemSlots;
+    }
+
+
+
 
     /**
      * Initializes the quantities of the denominations used in the vending machine.
@@ -150,6 +161,17 @@ public class RegularVendingMachine {
         System.out.println("<.............................................>");
     }
 
+
+    /**
+     * Gets the calorie counts for the available items in the vending machine.
+     *
+     * @return The list of calorie counts for the items.
+     */
+    public List<Integer> getItemCalories() {
+        return itemCalories;
+    }
+
+
     /**
      * Displays the item prices and allows the user to set the price for each item.
      */
@@ -175,6 +197,18 @@ public class RegularVendingMachine {
 
     }
 
+    //BAKA NEED
+    /**
+     * Gets the prices of the available items in the vending machine.
+     *
+     * @return The list of item prices.
+     */
+    public List<Double> getItemPrices() {
+        return itemPrices;
+    }
+
+
+
     /**
      * Displays the denomination quantities and allows the user to set the quantities for each denomination.
      */
@@ -198,6 +232,16 @@ public class RegularVendingMachine {
         System.out.println("\t####################################");
         System.out.println();
         System.out.println("<.............................................>");
+    }
+
+    //BAKA NEED
+    /**
+     * Gets the quantities of the denominations used in the vending machine.
+     *
+     * @return The list of denomination quantities.
+     */
+    public List<Integer> getDenominationQuantities() {
+        return denominationQuantities;
     }
 
     /**
