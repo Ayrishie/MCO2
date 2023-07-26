@@ -7,24 +7,23 @@ import java.util.Collections;
  * A class representing a regular vending machine.
  */
 public class RegularVendingMachine {
-    private static final int SLOT_COUNT = 8;
-    private static final int ITEM_CAPACITY = 10;
-    private static final int DENOMINATION_COUNT = 9;
-    private static final double DEFAULT_PRICE = 0.0;
-    private List<Integer> denominationValues;
-    private final List<String> itemSlots;
-    private final List<Integer> itemQuantities;
-    private final List<Double> itemPrices;
-    private List<Integer> denominationQuantities;
-    private final List<Integer> itemCalories;  // New list to hold calorie counts
-    private double totalSales;
-    private int transactionCount;
-    private List<Integer> initialItemQuantities;
-    private List<Integer> soldItemQuantities;
-    private final Scanner scanner;
+    protected static final int SLOT_COUNT = 8;
+    protected static final int ITEM_CAPACITY = 10;
+    protected static final int DENOMINATION_COUNT = 9;
+    protected static final double DEFAULT_PRICE = 0.0;
+    protected List<Integer> denominationValues;
+    protected final List<String> itemSlots;
+    protected final List<Integer> itemQuantities;
+    protected final List<Double> itemPrices;
+    protected List<Integer> denominationQuantities;
+    protected final List<Integer> itemCalories;  // New list to hold calorie counts
+    protected double totalSales;
+    protected int transactionCount;
+    protected List<Integer> initialItemQuantities;
+    protected List<Integer> soldItemQuantities;
+    protected final Scanner scanner;
 
-    private List<String> denominationNames;
-
+    protected List<String> denominationNames;
     /**
      * Constructs a RegularVendingMachine object and initializes its fields.
      */
@@ -295,7 +294,7 @@ public class RegularVendingMachine {
      * @param quantity the quantity of the item purchased
      * @param change   the change amount given to the customer
      */
-    private void printReceipt(int slot, int quantity, double change) {
+    void printReceipt(int slot, int quantity, double change) {
 
         // ANSI escape code for color formatting
         String ANSI_RESET = "\u001B[0m";
@@ -366,7 +365,7 @@ public class RegularVendingMachine {
      *
      * @param change the change amount to be given
      */
-    private void giveChange(double change) {
+    void giveChange(double change) {
         if (change == 0) {
             return;
         }
